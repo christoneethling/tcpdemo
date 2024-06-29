@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Text;
-using TcpShared;
+﻿using TcpShared;
 
 Console.WriteLine("Listener");
 
@@ -12,8 +10,6 @@ Task.Run(() =>
     
     tcpListenerService.Listen();
 });
-
-
 
 
 Console.WriteLine("Press (S)end (Q)uit: ");

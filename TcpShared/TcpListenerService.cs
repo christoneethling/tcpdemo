@@ -11,12 +11,17 @@ namespace TcpShared
     {
         Socket _socket;
         bool _listening;
+        public int PortNo { get; }
         ICollection<InboundConnection> inboundConnections = new List<InboundConnection>();
 
+        public TcpListenerService(int portNo)
+        {
+            PortNo = portNo;
+        }   
         public async void Listen()
         {
             Console.WriteLine("Start Listening");
-            var ipEndPoint = new IPEndPoint(IPAddress.Any, 13);
+            var ipEndPoint = new IPEndPoint(IPAddress.Any, PortNo);
             _socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             _socket.Bind(ipEndPoint);
             _socket.Listen(10);
