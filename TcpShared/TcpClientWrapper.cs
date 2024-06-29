@@ -113,7 +113,6 @@ namespace InfrastructureStandard.Instrumentation.Comms
                     //The server has disconnected
                     break;
                 }
-                Console.WriteLine("DataReceived event");
                 var dataAsString = Encoding.ASCII.GetString(ReadBuffer, 0, bytesRead);
                 Console.WriteLine("DataReceived event: " + dataAsString);
 

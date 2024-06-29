@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -56,7 +58,7 @@ namespace TcpShared
         {
             var inboundConnection = new InboundConnection(client);
             inboundConnections.Add(inboundConnection);
-            Console.WriteLine($"Client connected!!!!!!!!!!!!!!!!!!!!! Total connections={inboundConnections.Count}");
+            Console.WriteLine($"Client connected -->  Total connections={inboundConnections.Count}");
             var buffer = BufferPool.Instance.Checkout();
             try
             {
@@ -70,22 +72,23 @@ namespace TcpShared
                             if (count == 0)
                             {
                                 // Client disconnected normally.
-                                Console.WriteLine("Client disconnected*********");
+                                Console.WriteLine("Client disconnected.....");
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("Client disconnected*********");
                                 var dataReceived = new ArraySegment<byte>(buffer.Array, buffer.Offset, count);
                                 var data = System.Text.Encoding.UTF8.GetString(dataReceived.Array, dataReceived.Offset, dataReceived.Count);
                                 Console.WriteLine($"Data received: {data}");
                                 //OnDataRead(dataReceived);
                             }
                         }
-                        catch (Exception e)
+                        catch (IOException e)
                         {
-                            Console.WriteLine($"Exception 2: {e.Message}");
-
+                            if (e.Message.Contains("An existing connection was forcibly closed by the remote host"))
+                                Console.WriteLine($"The remote client died or crashed without disconnecting");
+                            else
+                                throw;
                         }
                     }
                 }
@@ -93,8 +96,7 @@ namespace TcpShared
             finally
             {
                 inboundConnections.Remove(inboundConnection);
-                Console.WriteLine("Finally  BufferPool.Instance.CheckIn(buffer);");
-                Console.WriteLine($"Client disconnected----------------> Total connections={inboundConnections.Count}");
+                Console.WriteLine($"Client disconnected --> Total connections={inboundConnections.Count}");
                 BufferPool.Instance.CheckIn(buffer);
             }
         }

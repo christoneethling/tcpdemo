@@ -16,8 +16,9 @@ Task.Run(() =>
 
 
 
-Console.Write("Press (S)end (R)eceive (D)isconnect, (C)onnect, or (Q)uit: ");
+Console.WriteLine("Press (S)end (Q)uit: ");
 var input = Console.ReadKey();
+Console.WriteLine();
 try
 {
     while (input.Key != ConsoleKey.Q)
@@ -25,12 +26,12 @@ try
         if (input.Key == ConsoleKey.S)
         {
             tcpListenerService.SendToAllClients("Hello"); 
-            Console.WriteLine($"Wrote");
         }
         else
             Console.WriteLine($"Unknown command: {input}");
-        Console.WriteLine("Press 'S' to send a message, 'D' to disconnect, 'C' to connect, or 'Q' to quit");
+        Console.WriteLine("Press (S)end  (Q)uit: ");
         input = Console.ReadKey();
+        Console.WriteLine();
     }
 }
 finally
