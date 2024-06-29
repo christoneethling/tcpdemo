@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcpShared", "TcpShared\TcpShared.csproj", "{24E8E5DF-2D5E-4E85-9531-EDB3D3091F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client2", "Client2\Client2.csproj", "{53D3FE8F-3644-4C43-BF3B-793617E07651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client2", "Client2\Client2.csproj", "{53D3FE8F-3644-4C43-BF3B-793617E07651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaleSimulatorWindowsService", "ScaleSimulatorWindowsService\ScaleSimulatorWindowsService.csproj", "{66248A56-66B9-486D-AE23-A45595FC6BA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{53D3FE8F-3644-4C43-BF3B-793617E07651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53D3FE8F-3644-4C43-BF3B-793617E07651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53D3FE8F-3644-4C43-BF3B-793617E07651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66248A56-66B9-486D-AE23-A45595FC6BA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66248A56-66B9-486D-AE23-A45595FC6BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66248A56-66B9-486D-AE23-A45595FC6BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66248A56-66B9-486D-AE23-A45595FC6BA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
