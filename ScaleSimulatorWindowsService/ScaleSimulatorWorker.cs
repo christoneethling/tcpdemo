@@ -22,8 +22,8 @@ namespace ScaleSimulatorWindowsService
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    if (_logger.IsEnabled(LogLevel.Information))
-                        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                    if (_logger.IsEnabled(LogLevel.Debug))
+                        _logger.LogDebug("Worker running at: {time}", DateTimeOffset.Now);
 
                     if (!initialized)
                     {
@@ -40,12 +40,12 @@ namespace ScaleSimulatorWindowsService
                                     _logger.LogError("Invalid Scale Setting: {name} Port: {port}", scaleSetting?.Name, scaleSetting?.PortNo);
                                     continue;
                                 }
-                                var scaleSimulator = new ScaleSimulator(scaleSetting.PortNo);
+                                var scaleSimulator = new ScaleSimulator(scaleSetting.PortNo, _logger);
                                 scaleSimulator.Start();
                                 scales.Add(scaleSimulator!);
                             }
                     }
-                    await Task.Delay(1000, stoppingToken);
+                    await Task.Delay(10000, stoppingToken);
                 }
             }
             catch (OperationCanceledException)
