@@ -7,11 +7,14 @@ namespace TcpShared
     {
         private readonly TcpListenerService _tcpListenerService;
         private readonly Timer timer;
-        private int currentWeight = 100;
+        private int portNo;
+        private int currentWeight = 1000;
+        private int howManyTimesBeforeWeChange;
 
         public ScaleSimulator(int portNo)
         {
-            _tcpListenerService = new TcpListenerService(portNo);
+            this.portNo = portNo;
+            this._tcpListenerService = new TcpListenerService(portNo);
             // instantiate a timer that fires every 200 milliseconds
 
             // and sends a message to all connected clients
@@ -23,10 +26,18 @@ namespace TcpShared
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            if (currentWeight > 56000)
-                currentWeight = 100;
-            currentWeight += 100;
-            _tcpListenerService.SendToAllClients($"\u0002  {currentWeight} kg \u0003");
+            howManyTimesBeforeWeChange--;
+            if (howManyTimesBeforeWeChange <= 0)
+            {
+                howManyTimesBeforeWeChange = 20;
+                currentWeight += 1000;
+                if (currentWeight > 56000)
+                    currentWeight = 1000;
+
+            }
+            var message = $"\u0002  {currentWeight} kg \u0003\r\n";
+            Console.WriteLine($"Scale {portNo} send:{message}");
+            _tcpListenerService.SendToAllClients(message);
         }
 
         public void Dispose()

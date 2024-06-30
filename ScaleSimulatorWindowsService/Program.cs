@@ -1,15 +1,10 @@
 using ScaleSimulatorWindowsService;
 using Serilog;
 
-
-var builder = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
-    {
-        services.AddHostedService<ScaleSimulatorWorker>();
-    })
-    .UseSerilog((hostingContext, services, loggerConfiguration) => loggerConfiguration
-    .ReadFrom.Configuration(hostingContext.Configuration)
-    .Enrich.FromLogContext());
-
-var host = builder.Build();
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+builder.Services.AddWindowsService(options => { options.ServiceName = "Wayware Scale Simulator"; });
+builder.Services.AddSerilog(loggerConfiguration => loggerConfiguration.ReadFrom.Configuration(builder.Configuration).Enrich.FromLogContext());
+builder.Services.AddHostedService<ScaleSimulatorWorker>();
+IHost host = builder.Build();
 host.Run();
+
