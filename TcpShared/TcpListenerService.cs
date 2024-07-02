@@ -92,17 +92,18 @@ namespace TcpShared
                         }
                         catch (IOException e)
                         {
-                            if (e.Message.Contains("An existing connection was forcibly closed by the remote host"))
-                               _logger?.LogInformation($"TcpListenerService {PortNo}: The remote client died or crashed without disconnecting 1");
+                            if (e.Message.Contains("An existing connection was forcibly closed by the remote host") ||
+                                e.Message.Contains("A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond"))
+                               _logger?.LogError(e, $"TcpListenerService {PortNo}: IOException, possibly the remote client died or crashed without disconnecting 1. Error message: {e.Message}");
                             else
-                                throw new Exception("IOException in AcceptClient of Wayware", e);
+                                _logger?.LogError(e, $"TcpListenerService {PortNo}: IOException, other. Error message: {e.Message}");
                         }
                         catch (SocketException e2)
                         {
                             if (e2.Message.Contains(" the connected party did not properly respond after a period of time, or established connection failed "))
                                _logger?.LogInformation($"TcpListenerService {PortNo}: The remote client died or crashed without disconnecting 2");
                             else
-                                throw new Exception("SocketException in AcceptClient of Wayware", e2);
+                                _logger?.LogError(e2, $"TcpListenerService {PortNo}: SocketException, other. Error message: {e2.Message}");
                         }
                     }
                 }
